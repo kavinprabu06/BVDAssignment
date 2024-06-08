@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BVDTest</string>
+    <string name="login_title">Login</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="signup_title">SignUp</string>
+    <string name="forget_password_title">Forget Password ?</string>
+    <string name="bottom_menu_profile">Profile</string>
+    <string name="bottom_menu_home">Home</string>
+    <string name="bottom_menu_qr_scanner">QR Scanner</string>
+    <string name="bottom_menu_logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

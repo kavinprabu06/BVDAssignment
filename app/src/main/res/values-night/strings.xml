@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_title">Login</string>
+    <string name="hint_password">Password</string>
+    <string name="signup_title">SignUp</string>
+    <string name="forget_password_title">Forget Password ?</string>
+    <string name="bottom_menu_profile">Profile</string>
+    <string name="bottom_menu_home">Home</string>
+    <string name="bottom_menu_qr_scanner">QR Scanner</string>
+    <string name="bottom_menu_logout">Logout</string>
+</resources>

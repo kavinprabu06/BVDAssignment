@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profileFragment2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visible="true"
+        android:icon="@drawable/icon_profile"
+        android:title="@string/bottom_menu_profile" />
+    <item
+        android:id="@+id/homeMapFragment2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visible="true"
+        android:icon="@drawable/icon_home"
+        android:title="@string/bottom_menu_home" />
+    <item
+        android:id="@+id/qrCodeScannerFragment2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visible="true"
+        android:icon="@drawable/icon_qr_scanner"
+        android:title="@string/bottom_menu_qr_scanner" />
+    <item
+        android:id="@+id/menu_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visible="true"
+        android:icon="@drawable/icon_logout"
+        android:title="@string/bottom_menu_logout" />
+</menu>
