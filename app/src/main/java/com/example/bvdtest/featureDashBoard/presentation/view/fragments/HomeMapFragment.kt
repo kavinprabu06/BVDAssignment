@@ -1,15 +1,20 @@
 package com.example.bvdtest.featureDashBoard.presentation.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.bvdtest.featureDashBoard.presentation.viewModel.FuelSiteViewModel
 import com.example.bvdtest.R
+import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.DataX
+import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.FuelSiteResponse
+import com.example.bvdtest.featureDashBoard.presentation.view.FuelSiteDetailActivity
 import com.example.bvdtest.utils.common.Resource
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -52,12 +57,15 @@ class HomeMapFragment : Fragment() {
 
         mapFragment?.getMapAsync { map ->
             googleMap = map
-            setupMap()
+            observeFuelSites()
+            setupMarkerClickListener()
+            observeSelectedFuelSite()
         }
+
 
     }
 
-    private fun setupMap() {
+    private fun observeFuelSites() {
         val markerList = mutableListOf<Marker>()
 
         viewModel.allFuelSites.observe(viewLifecycleOwner, Observer { results ->
@@ -71,18 +79,18 @@ class HomeMapFragment : Fragment() {
 
                         val latLng = LatLng(adjustedLatitude, adjustedLongitude)
                         val marker = googleMap.addMarker(MarkerOptions().position(latLng).title(fuelSite.city))
+//                        marker?.let {
+//                            markerList.add(it)
+//                            it.tag = fuelSite
+//                        }
                         if (marker != null) {
+                            marker.tag = fuelSite
                             markerList.add(marker)
+
                         }
                     }
-//                    val cameraPosition = CameraPosition.Builder()
-//                        .target(LatLng(defaultLatitude, defaultLongitude)) // Set default position
-//                        .zoom(12f) // Set zoom level (0-21)
-//                        .build()
-//                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
                     zoomToFitAllMarkers(markerList)
-                    // Enable zoom controls
                     googleMap.uiSettings.isZoomControlsEnabled = true
 
                 }
@@ -97,6 +105,26 @@ class HomeMapFragment : Fragment() {
 
             }
         })
+    }
+    private fun observeSelectedFuelSite() {
+        viewModel.selectedFuelSite.observe(viewLifecycleOwner, Observer { fuelSite ->
+            // Handle the selected fuel site
+            // You can show a detailed view or perform any other actions
+
+            Toast.makeText(requireContext(), "Selected: ${fuelSite.city}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), FuelSiteDetailActivity::class.java)
+            intent.putExtra("fuelSite", fuelSite)
+            startActivity(intent)
+        })
+    }
+    private fun setupMarkerClickListener() {
+        googleMap.setOnMarkerClickListener { marker ->
+            val fuelSite = marker.tag as? DataX
+            fuelSite?.let {
+                viewModel.selectFuelSite(it)
+            }
+            true
+        }
     }
 
     private fun zoomToFitAllMarkers(markers: List<Marker>) {

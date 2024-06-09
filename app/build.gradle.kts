@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id ("kotlin-parcelize")
+
 
 }
 
@@ -38,6 +40,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -84,5 +87,9 @@ dependencies {
 
     //Encrypted SharedPreferences
     implementation ("androidx.security:security-crypto:1.1.0-alpha03")
+
+    //Qr Code Scanner -Zxing
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+
 
 }

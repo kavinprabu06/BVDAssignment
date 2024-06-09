@@ -1,5 +1,9 @@
 package com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class FuelSiteTaxes(
     val billable: Int,
     val comdata_site_id: String,
@@ -25,4 +29,4 @@ data class FuelSiteTaxes(
     val tchek_site_id: String,
     val terminal_id: Int,
     val updated_at: String
-)
+) : Parcelable

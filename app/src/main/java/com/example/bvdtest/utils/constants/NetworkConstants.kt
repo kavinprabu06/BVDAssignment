@@ -8,9 +8,15 @@ object NetworkConstants {
     const val PARAM_SORTING_FIELD = "id"
     const val PARAM_SORTING_DIRECTION = "ASC"
 
+    //Shared Preferences Constants
     const val PREFS_FILENAME = "secure_prefs"
     const val KEY_ACCESS_TOKEN = "access_token"
     const val KEY_REFRESH_TOKEN = "refresh_token"
     const val KEY_EXPIRES_TOKEN = "expires_in"
+    const val KEY_FIRST_NAME = "first_name"
+    const val KEY_LAST_NAME = "last_name"
+    const val KEY_EMAIL = "email"
+    const val KEY_PHONE_NUMBER = "phone"
+
 
 }

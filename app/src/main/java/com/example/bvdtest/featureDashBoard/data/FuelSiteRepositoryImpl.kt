@@ -3,12 +3,18 @@ package com.example.bvdtest.featureDashBoard.data
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.FuelSiteResponse
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.sitesApiService
 import com.example.bvdtest.featureDashBoard.domain.FuelSiteRepository
+import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.LoginUserResponse
+import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.UserProfileDetails
 import com.example.bvdtest.utils.common.Resource
+import com.example.bvdtest.utils.common.SharedPrefManager
 import com.example.bvdtest.utils.constants.NetworkConstants
 import java.io.IOException
 import javax.inject.Inject
 
-class FuelSiteRepositoryImpl @Inject constructor(private val sitesApiService: sitesApiService) :
+class FuelSiteRepositoryImpl @Inject constructor(
+    private val sitesApiService: sitesApiService,
+    private val sharedPrefManager: SharedPrefManager
+) :
     FuelSiteRepository {
     override suspend fun getAllFuelSites(): Resource<FuelSiteResponse> {
 
@@ -34,6 +40,19 @@ class FuelSiteRepositoryImpl @Inject constructor(private val sitesApiService: si
         } catch (e: Exception) {
             return Resource.Failure(e.message.toString())
         }
+    }
+
+    override suspend fun getUserProfileDetails(): UserProfileDetails {
+        return sharedPrefManager.getUserProfileDetails()
+    }
+
+    override fun logoutUser() {
+        clearSharedPreferenceDetails()
+    }
+
+
+    private fun clearSharedPreferenceDetails() {
+        sharedPrefManager.clearSharedPreferenceDetails()
     }
 }
 

@@ -15,19 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BVDTest"
         tools:targetApi="31">
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDO0dHeBDBRU1hRM9aTbnQhv-ha-mdAf7g" />
-
         <activity
-            android:name=".featureDashBoard.presentation.view.DashBoardActivity"
-            android:exported="true">
-
-        </activity>
-
-        <activity
-            android:name=".featureMainAuthentication.presentation.view.MainLoginActivity"
+            android:name=".featureMainAuthentication.presentation.view.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +24,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".featureDashBoard.presentation.view.FuelSiteDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_fuel_site_detail"
+            android:theme="@style/Theme.BVDTest" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="" />
+
+        <activity
+            android:name=".featureDashBoard.presentation.view.DashBoardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".featureMainAuthentication.presentation.view.MainLoginActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ class MainLoginActivity : AppCompatActivity() {
             ActivityMainBinding.inflate(layoutInflater) // Inflate the layout using view binding
         val view = binding.root
         setContentView(view)
+
 
         binding.etUserName.addTextChangedListener(textWatcher)
         binding.etPassWord.addTextChangedListener(textWatcher)
@@ -56,6 +58,7 @@ class MainLoginActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     Toast.makeText(this, "" + result.data.email, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(applicationContext, DashBoardActivity::class.java))
+                    finish()
                 }
 
                 is Resource.Failure -> {
@@ -64,7 +67,7 @@ class MainLoginActivity : AppCompatActivity() {
                 }
 
                 is Resource.Loading -> {
-
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
             }

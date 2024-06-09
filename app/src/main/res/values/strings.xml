@@ -9,6 +9,10 @@
     <string name="bottom_menu_home">Home</string>
     <string name="bottom_menu_qr_scanner">QR Scanner</string>
     <string name="bottom_menu_logout">Logout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_fuel_site_detail">FuelSiteDetailActivity</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
 </resources>

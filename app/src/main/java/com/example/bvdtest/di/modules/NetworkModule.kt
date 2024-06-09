@@ -3,8 +3,10 @@ package com.example.bvdtest.di.modules
 import android.content.Context
 import com.example.bvdtest.featureDashBoard.data.FuelSiteRepositoryImpl
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.sitesApiService
+import com.example.bvdtest.featureDashBoard.domain.CheckTokenValidityUseCase
 import com.example.bvdtest.featureDashBoard.domain.FuelSiteRepository
 import com.example.bvdtest.featureDashBoard.domain.FuelSitesUseCase
+import com.example.bvdtest.featureDashBoard.domain.UserProfileDetailUseCase
 import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.LoginUserApiService
 import com.example.bvdtest.featureMainAuthentication.data.repositoryImpl.LoginUserRepositoryImpl
 import com.example.bvdtest.featureMainAuthentication.domain.LoginUserRepository
@@ -82,19 +84,29 @@ object NetworkModule {
     }
 
     @Provides
+    fun provideCheckTokenValidityUseCase(sharedPrefManager: SharedPrefManager) : CheckTokenValidityUseCase{
+        return CheckTokenValidityUseCase(sharedPrefManager)
+    }
+
+    @Provides
     @Singleton
     fun provideFuelSiteApiService(retrofit: Retrofit): sitesApiService{
         return retrofit.create(sitesApiService::class.java)
     }
 
     @Provides
-    fun provideFuelSiteRepository(sitesApiService: sitesApiService): FuelSiteRepository {
-        return FuelSiteRepositoryImpl(sitesApiService)
+    fun provideFuelSiteRepository(sitesApiService: sitesApiService, sharedPrefManager: SharedPrefManager): FuelSiteRepository {
+        return FuelSiteRepositoryImpl(sitesApiService, sharedPrefManager)
     }
 
     @Provides
     fun provideFuelSiteUserUseCase(fuelSiteRepository: FuelSiteRepository) : FuelSitesUseCase{
         return FuelSitesUseCase(fuelSiteRepository)
+    }
+
+    @Provides
+    fun provideUserProfileDetailUseCase(fuelSiteRepository: FuelSiteRepository) : UserProfileDetailUseCase{
+        return UserProfileDetailUseCase(fuelSiteRepository)
     }
 
 }

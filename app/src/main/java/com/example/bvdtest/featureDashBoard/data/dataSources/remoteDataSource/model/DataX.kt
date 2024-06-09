@@ -1,6 +1,12 @@
 package com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model
 
-data class DataX(
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
+
+@Parcelize
+data class DataX (
     val address: String,
     val city: String,
     val country_id: Int,
@@ -27,4 +33,4 @@ data class DataX(
     val terminal_name: String,
     val updated_at: String,
     val zip: String
-)
+) : Parcelable
