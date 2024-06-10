@@ -5,10 +5,11 @@
     <color name="BVDThemePrimary">#6200EE</color>
     <color name="BVDThemeSecondary">#3700B3</color>
     <color name="BVDCardBg">#803700B3</color>
-<color name="defaultSheetColor">#26C3ACF6</color>
+    <color name="defaultSheetColor">#26C3ACF6</color>
     <color name="grey">#9A9292</color>
+    <color name="btEnabledColor">#CD7F19</color>
 
-
-    <color name="buttonEnabledColor">@color/BVDThemeSecondary</color>
+<!--    Buton Color-->
+    <color name="buttonEnabledColor">@color/btEnabledColor</color>
     <color name="buttonDisabledColor">@color/grey</color>
 </resources>

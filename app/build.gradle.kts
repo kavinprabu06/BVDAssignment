@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.bvdtest"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -88,11 +88,15 @@ dependencies {
     //Encrypted SharedPreferences
     implementation ("androidx.security:security-crypto:1.1.0-alpha03")
 
-    //Qr Code Scanner -Zxing
-    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
-
     //request Permissions
     implementation ("com.karumi:dexter:6.2.2")
+
+    //Qr Code Scanner -Zxing
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation ("com.google.zxing:core:3.4.1")
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
+
+
 
 
 }

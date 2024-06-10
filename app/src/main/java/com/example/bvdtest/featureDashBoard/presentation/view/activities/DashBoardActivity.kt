@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -36,6 +38,7 @@ class DashBoardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding =
             ActivityDashBoardBinding.inflate(layoutInflater)
         val view = binding.root
@@ -54,6 +57,13 @@ class DashBoardActivity : AppCompatActivity() {
         setupWithNavController(bottomNavigationView, navController)
 
         observeLogoutLivedata()
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Delegate the result to the fragment
+        val fragment = supportFragmentManager.findFragmentById(R.id.qrCodeScannerFragment2)
+        fragment?.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun observeLogoutLivedata(){

@@ -2,19 +2,17 @@ package com.example.bvdtest.featureDashBoard.presentation.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.example.bvdtest.featureDashBoard.presentation.viewModel.FuelSiteViewModel
 import com.example.bvdtest.R
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.DataX
 import com.example.bvdtest.featureDashBoard.presentation.view.activities.FuelSiteDetailActivity
+import com.example.bvdtest.featureDashBoard.presentation.viewModel.FuelSiteViewModel
 import com.example.bvdtest.utils.common.Resource
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -58,10 +56,7 @@ class HomeMapFragment : Fragment() {
             googleMap = map
             observeFuelSites()
             setupMarkerClickListener()
-            observeSelectedFuelSite()
         }
-
-
     }
 
     private fun observeFuelSites() {
@@ -70,21 +65,25 @@ class HomeMapFragment : Fragment() {
         viewModel.allFuelSites.observe(viewLifecycleOwner, Observer { results ->
             when (results) {
                 is Resource.Success -> {
-                    results.data.data.data.forEach { fuelSite ->
+                    results.data.data?.data?.forEach { fuelSite ->
 
-                        val adjustedLatitude = if (fuelSite.latitude_direction == "S") -fuelSite.latitude else fuelSite.latitude
-                        val adjustedLongitude = if (fuelSite.longitude_direction == "W") -fuelSite.longitude else fuelSite.longitude
+                        val adjustedLatitude =
+                            if (fuelSite.latitude_direction == "S") -fuelSite.latitude!! else fuelSite.latitude
+                        val adjustedLongitude =
+                            if (fuelSite.longitude_direction == "W") -fuelSite.longitude!! else fuelSite.longitude
 
-                        val latLng = LatLng(adjustedLatitude, adjustedLongitude)
-                        val marker = googleMap.addMarker(MarkerOptions().position(latLng).title(fuelSite.city))
-//                        marker?.let {
-//                            markerList.add(it)
-//                            it.tag = fuelSite
-//                        }
-                        if (marker != null) {
-                            marker.tag = fuelSite
-                            markerList.add(marker)
+                        if (adjustedLongitude !=null && adjustedLatitude !=null){
 
+                            val latLng = LatLng(adjustedLatitude, adjustedLongitude)
+                            val marker = googleMap.addMarker(
+                                MarkerOptions().position(latLng).title(fuelSite.city)
+                            )
+
+                            if (marker != null) {
+                                marker.tag = fuelSite
+                                markerList.add(marker)
+
+                            }
                         }
                     }
 
@@ -94,33 +93,38 @@ class HomeMapFragment : Fragment() {
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(requireActivity(),"API Failure :"+results.message,Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "API Failure :" + results.message,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 is Resource.Loading -> {
-                    Toast.makeText(requireActivity(),"Fetching....",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "Fetching....", Toast.LENGTH_SHORT).show()
                 }
 
             }
         })
     }
+
     private fun observeSelectedFuelSite() {
         viewModel.selectedFuelSite.observe(viewLifecycleOwner, Observer { fuelSite ->
-            // Handle the selected fuel site
-            // You can show a detailed view or perform any other actions
-
-            Toast.makeText(requireContext(), "Selected: ${fuelSite.city}", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), FuelSiteDetailActivity::class.java)
             intent.putExtra("fuelSite", fuelSite)
             startActivity(intent)
         })
     }
+
     private fun setupMarkerClickListener() {
         googleMap.setOnMarkerClickListener { marker ->
             val fuelSite = marker.tag as? DataX
             fuelSite?.let {
                 viewModel.selectFuelSite(it)
             }
+            val intent = Intent(requireContext(), FuelSiteDetailActivity::class.java)
+            intent.putExtra("fuelSite", fuelSite)
+            startActivity(intent);
             true
         }
     }
