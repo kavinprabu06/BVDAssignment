@@ -4,9 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,7 +16,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.bvdtest.R
 import com.example.bvdtest.databinding.ActivityDashBoardBinding
-import com.example.bvdtest.databinding.ActivityMainBinding
 import com.example.bvdtest.featureDashBoard.presentation.viewModel.FuelSiteViewModel
 import com.example.bvdtest.featureMainAuthentication.presentation.view.MainLoginActivity
 import com.example.bvdtest.utils.common.Resource
@@ -33,7 +29,7 @@ class DashBoardActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
-    private val fuelSiteViewModel:FuelSiteViewModel by viewModels()
+    private val fuelSiteViewModel: FuelSiteViewModel by viewModels()
     private lateinit var binding: ActivityDashBoardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,37 +54,37 @@ class DashBoardActivity : AppCompatActivity() {
 
         observeLogoutLivedata()
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        // Delegate the result to the fragment
-        val fragment = supportFragmentManager.findFragmentById(R.id.qrCodeScannerFragment2)
-        fragment?.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun observeLogoutLivedata(){
-        fuelSiteViewModel.userLogoutResponse.observe(this, Observer {response ->
+    private fun observeLogoutLivedata() {
+        fuelSiteViewModel.userLogoutResponse.observe(this, Observer { response ->
             when (response) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = ProgressBar.VISIBLE
                 }
+
                 is Resource.Success -> {
                     binding.progressBar.visibility = ProgressBar.GONE
 
                     navigateToLoginScreen()
                 }
+
                 is Resource.Failure -> {
                     binding.progressBar.visibility = ProgressBar.GONE
-                    Toast.makeText(applicationContext, "API Failure : " + response.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "API Failure : " + response.message,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         })
     }
 
-    private fun navigateToLoginScreen(){
-        startActivity(Intent(applicationContext,MainLoginActivity::class.java))
+    private fun navigateToLoginScreen() {
+        startActivity(Intent(applicationContext, MainLoginActivity::class.java))
         finish()
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
@@ -100,6 +96,7 @@ class DashBoardActivity : AppCompatActivity() {
                 showDialogBox()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
