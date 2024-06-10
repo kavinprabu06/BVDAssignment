@@ -2,8 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="BVDTheme">#16189c</color>
+    <color name="BVDThemePrimary">#6200EE</color>
+    <color name="BVDThemeSecondary">#3700B3</color>
+    <color name="BVDCardBg">#803700B3</color>
+<color name="defaultSheetColor">#26C3ACF6</color>
+    <color name="grey">#9A9292</color>
 
-    <color name="grey">#595858</color>
 
+    <color name="buttonEnabledColor">@color/BVDThemeSecondary</color>
+    <color name="buttonDisabledColor">@color/grey</color>
 </resources>

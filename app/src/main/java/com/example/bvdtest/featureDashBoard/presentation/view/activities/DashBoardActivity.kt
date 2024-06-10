@@ -1,22 +1,26 @@
-package com.example.bvdtest.featureDashBoard.presentation.view
+package com.example.bvdtest.featureDashBoard.presentation.view.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.bvdtest.R
+import com.example.bvdtest.databinding.ActivityDashBoardBinding
+import com.example.bvdtest.databinding.ActivityMainBinding
 import com.example.bvdtest.featureDashBoard.presentation.viewModel.FuelSiteViewModel
 import com.example.bvdtest.featureMainAuthentication.presentation.view.MainLoginActivity
+import com.example.bvdtest.utils.common.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,10 +32,14 @@ class DashBoardActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
     private val fuelSiteViewModel:FuelSiteViewModel by viewModels()
+    private lateinit var binding: ActivityDashBoardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.bvdtest.R.layout.activity_dash_board)
+        binding =
+            ActivityDashBoardBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         // Set up the Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -45,26 +53,31 @@ class DashBoardActivity : AppCompatActivity() {
 
         setupWithNavController(bottomNavigationView, navController)
 
-//        bottomNavigationView.setOnItemSelectedListener { item ->
-//
-//            when (item.itemId) {
-//                R.id.logoutFragment -> {
-//                    showDialogBox()
-//                    true
-//
-//                }
-//
-//                else -> {
-//                    onNavDestinationSelected(item, navController)
-//                    true
-//                }
-//
-//
-//            }
-//
-//        }
+        observeLogoutLivedata()
+    }
 
+    private fun observeLogoutLivedata(){
+        fuelSiteViewModel.userLogoutResponse.observe(this, Observer {response ->
+            when (response) {
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = ProgressBar.VISIBLE
+                }
+                is Resource.Success -> {
+                    binding.progressBar.visibility = ProgressBar.GONE
 
+                    navigateToLoginScreen()
+                }
+                is Resource.Failure -> {
+                    binding.progressBar.visibility = ProgressBar.GONE
+                    Toast.makeText(applicationContext, "API Failure : " + response.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun navigateToLoginScreen(){
+        startActivity(Intent(applicationContext,MainLoginActivity::class.java))
+        finish()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -80,6 +93,7 @@ class DashBoardActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun showDialogBox() {
         AlertDialog.Builder(this)
             .setTitle("Logout")
@@ -87,8 +101,6 @@ class DashBoardActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton("Logout") { dialog, which ->
                 fuelSiteViewModel.logoutUser()
-                startActivity(Intent(applicationContext,MainLoginActivity::class.java))
-                finish()
             }
             .setNegativeButton("Cancel", null)
             .show()

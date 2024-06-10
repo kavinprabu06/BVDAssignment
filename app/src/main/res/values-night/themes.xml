@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BVDTest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">@color/BVDTheme</item>
+        <item name="colorPrimary">@color/BVDThemePrimary</item>
+        <item name="colorPrimaryDark">@color/BVDThemeSecondary</item> <!-- Status bar color -->
     </style>
 </resources>

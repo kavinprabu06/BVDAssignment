@@ -1,14 +1,17 @@
 package com.example.bvdtest.featureDashBoard.data
 
+import android.util.Log
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.FuelSiteResponse
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.sitesApiService
 import com.example.bvdtest.featureDashBoard.domain.FuelSiteRepository
 import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.LoginUserResponse
 import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.UserProfileDetails
+import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.logout.UserLogoutResponse
 import com.example.bvdtest.utils.common.Resource
 import com.example.bvdtest.utils.common.SharedPrefManager
 import com.example.bvdtest.utils.constants.NetworkConstants
 import java.io.IOException
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class FuelSiteRepositoryImpl @Inject constructor(
@@ -46,9 +49,32 @@ class FuelSiteRepositoryImpl @Inject constructor(
         return sharedPrefManager.getUserProfileDetails()
     }
 
-    override fun logoutUser() {
-        clearSharedPreferenceDetails()
+    override suspend fun logoutUser() : Resource<UserLogoutResponse>? {
+        try {
+            val logoutUserResponse = sitesApiService.logOutUser()
+
+            return if (logoutUserResponse.isSuccessful){
+                logoutUserResponse.body()?.let {
+                    clearSharedPreferenceDetails()
+                     Resource.Success(it)
+                }
+            }
+            else{
+                Resource.Failure("Api Error")
+            }
+        } catch (io: IOException) {
+
+            return Resource.Failure(io.message.toString())
+
+        } catch (e: Exception) {
+
+            return Resource.Failure(e.message.toString())
+        }catch ( e: IllegalStateException){
+            return Resource.Failure(e.message.toString())
+        }
+
     }
+
 
 
     private fun clearSharedPreferenceDetails() {

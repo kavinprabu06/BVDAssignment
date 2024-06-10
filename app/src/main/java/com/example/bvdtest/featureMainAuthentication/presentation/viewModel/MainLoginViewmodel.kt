@@ -63,7 +63,7 @@ class MainLoginViewmodel @Inject constructor(
             validtaionPasswordResult.value = ValidationResult(true)
 
             // Set the loading state
-            Resource.Loading()
+            _loginResult.value = Resource.Loading()
 
             val response = loginUserUseCase.verifyUser(username, passWord)
             _loginResult.value = response

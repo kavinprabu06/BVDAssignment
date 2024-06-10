@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BVDTest</string>
     <string name="login_title">Login</string>
-    <string name="hint_username">Username</string>
-    <string name="hint_password">Password</string>
+    <string name="hint_username">Your Username</string>
+    <string name="hint_password">Your Password</string>
     <string name="signup_title">SignUp</string>
     <string name="forget_password_title">Forget Password ?</string>
     <string name="bottom_menu_profile">Profile</string>

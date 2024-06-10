@@ -91,5 +91,8 @@ dependencies {
     //Qr Code Scanner -Zxing
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
 
+    //request Permissions
+    implementation ("com.karumi:dexter:6.2.2")
+
 
 }

@@ -10,6 +10,7 @@ import com.example.bvdtest.featureDashBoard.domain.FuelSitesUseCase
 import com.example.bvdtest.featureDashBoard.domain.UserProfileDetailUseCase
 import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.LoginUserResponse
 import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.UserProfileDetails
+import com.example.bvdtest.featureMainAuthentication.data.dataSources.remoteDataSources.model.logout.UserLogoutResponse
 import com.example.bvdtest.utils.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,14 +24,16 @@ class FuelSiteViewModel @Inject constructor(
     ViewModel() {
 
     private val _allFuelSites = MutableLiveData<Resource<FuelSiteResponse>>()
-    val allFuelSites get() = _allFuelSites
+    val allFuelSites: LiveData<Resource<FuelSiteResponse>> = _allFuelSites
 
     private val _selectedFuelSite = MutableLiveData<DataX>()
     val selectedFuelSite: LiveData<DataX> = _selectedFuelSite
 
     private val _userProfileDetails = MutableLiveData<UserProfileDetails>()
-    val userProfileDetails get() = _userProfileDetails
+    val userProfileDetails: LiveData<UserProfileDetails> = _userProfileDetails
 
+    private val _userLogoutResponse = MutableLiveData<Resource<UserLogoutResponse>>()
+    val userLogoutResponse: LiveData<Resource<UserLogoutResponse>> = _userLogoutResponse
 
     fun getAllFuelSites() {
         viewModelScope.launch {
@@ -48,6 +51,9 @@ class FuelSiteViewModel @Inject constructor(
     }
 
     fun logoutUser(){
-        userProfileDetailUseCase.logoutUser()
+        viewModelScope.launch {
+            _userLogoutResponse.value = Resource.Loading()
+            _userLogoutResponse.value = userProfileDetailUseCase.logoutUser()
+        }
     }
 }

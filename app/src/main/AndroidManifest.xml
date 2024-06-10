@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".di.MainApplication"
@@ -26,17 +32,18 @@
         </activity>
 
         <activity
-            android:name=".featureDashBoard.presentation.view.FuelSiteDetailActivity"
+            android:name=".featureDashBoard.presentation.view.activities.FuelSiteDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_fuel_site_detail"
             android:theme="@style/Theme.BVDTest" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="AIzaSyDO0dHeBDBRU1hRM9aTbnQhv-ha-mdAf7g" />
+
 
         <activity
-            android:name=".featureDashBoard.presentation.view.DashBoardActivity"
+            android:name=".featureDashBoard.presentation.view.activities.DashBoardActivity"
             android:exported="true" />
         <activity
             android:name=".featureMainAuthentication.presentation.view.MainLoginActivity"

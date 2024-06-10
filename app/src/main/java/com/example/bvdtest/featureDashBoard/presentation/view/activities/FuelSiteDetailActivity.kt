@@ -1,12 +1,10 @@
-package com.example.bvdtest.featureDashBoard.presentation.view
+package com.example.bvdtest.featureDashBoard.presentation.view.activities
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.bvdtest.R
 import com.example.bvdtest.databinding.ActivityFuelSiteDetailBinding
 import com.example.bvdtest.featureDashBoard.data.dataSources.remoteDataSource.model.DataX
-import java.io.Serializable
 
 class FuelSiteDetailActivity : AppCompatActivity() {
 
@@ -28,7 +26,7 @@ class FuelSiteDetailActivity : AppCompatActivity() {
         fuelSite?.let {
             binding.apply {
                 tvNameDetail.text = it.name
-                tvstateDetail.text = it.state.name
+                tvStateDetail.text = it.state.name
                 tvProvinceDetail.text = it.city
                 tvTerminalDetail.text = it.terminal_name
             }

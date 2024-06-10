@@ -33,7 +33,6 @@ class ProfileFragment : Fragment() {
 
         lifecycleScope.launch {
                 userProfileViewModel.getUserProfileDetails()
-
         }
         return binding.root
     }

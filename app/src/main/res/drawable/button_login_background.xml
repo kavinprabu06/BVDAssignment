@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="16dp" /> <!-- Adjust the radius to change the roundness of the corners -->
+    <!-- Button enabled state -->
+    <solid android:color="@color/buttonEnabledColor" />
+    <!-- Button disabled state -->
+    <solid android:color="@color/buttonDisabledColor" android:state_enabled="false" />
+</shape>
