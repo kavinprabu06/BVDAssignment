@@ -49,10 +49,10 @@
 
         </activity>
         <activity
-            android:name=".utils.common.CameraCaptureActivityPortrait"
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
         android:stateNotNeeded="true"
-        android:theme="@style/FullscreenTheme"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation"
             android:windowSoftInputMode="stateAlwaysHidden">
     </activity>
     </application>
